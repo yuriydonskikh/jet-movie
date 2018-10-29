@@ -1,0 +1,106 @@
+<div class="row justify-content-center">
+    <div class="col-md-10 col-sm-11">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center text-white">Best movies to watch right now! <button class="btn btn-dark" (click)="modalOpen = !this.modalOpen">
+                        <fa-icon [icon]="['fas', 'filter']"></fa-icon>
+                    </button></h1>
+                </div>
+            </div>
+
+            <div *ngIf="modalOpen" class="jumbotron">
+                <div class="row justify-content-center">
+                    <div>
+                        <h2>Search for movie...</h2>
+                    </div>
+                    <div class="col-md-10 col-sm-11">
+                        <form #f="ngForm" class="form-inline" novalidate (ngSubmit)="onFilter(f)">
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Title</div>
+                                </div>
+                                <input type="text" class="form-control" name="Title" placeholder="Title" ngModel>
+                            </div>
+
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Year</div>
+                                </div>
+                                <input type="number" min="0" max="2018" required="" class="form-control" name="Year" placeholder="Year" ngModel>
+                            </div>
+
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Genre</div>
+                                </div>
+                                <input type="text" class="form-control" name="Genre" placeholder="Genre" ngModel>
+                            </div>
+
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Description</div>
+                                </div>
+                                <input type="text" class="form-control" name="Description" placeholder="Description" ngModel>
+                            </div>
+
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Country</div>
+                                </div>
+                                <input type="text" class="form-control" name="Country" placeholder="Country" ngModel>
+                            </div>
+
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Actors</div>
+                                </div>
+                                <input type="text" class="form-control" name="Actors" placeholder="Actors" ngModel>
+                            </div>
+
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">Sort by</div>
+                                </div>
+                                <select class="form-control" name="SortBy" ngModel>
+                                    <option value="0">None</option>
+                                    <option value="1">ByDate</option>
+                                    <option value="2">ByDateDesc</option>
+                                    <option value="3">ByTitle</option>
+                                    <option value="4">ByTitleDesc</option>
+                                    <option value="5">ByCountry</option>
+                                    <option value="6">ByCountryDesc</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-outline-dark" [disabled]="f.invalid || isRequesting">Apply filter</button>
+                                <app-spinner [isRunning]="isRequesting"></app-spinner>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row"
+                 infinite-scroll
+                 [infiniteScrollDistance]="2"
+                 [infiniteScrollThrottle]="50"
+                 (scrolled)="onScroll()"
+                 [scrollWindow]="true">
+                <div *ngFor="let movie of movies; let i = index" class="cursor-pointer col-sm-6 col-md-4 col-lg-3 mt-4" (click)="toMovieDetails(movie.id)">
+                    <div class="card bg-dark text-white h-100">
+                        <img class="card-img-top" src="{{movie.poster}}" />
+                        <div class="card-body">
+                            <h6>{{movie.title}} ({{movie.released | date:'yyyy'}})</h6>
+                        </div>
+                        <div class="card-footer">
+                            <span *ngFor="let genre of movie.genres; let gi = index" class="badge badge-pill badge-info m-1">{{genre}}</span>
+                        </div>
+                    </div>
+                </div>
+                <app-spinner [isRunning]="isRequesting" class="bg-light text-center"></app-spinner>
+            </div>
+        </div>
+    </div>
+</div>
