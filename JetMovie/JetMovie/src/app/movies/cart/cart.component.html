@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-md-10 col-sm-11">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center text-white">
+                        <fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon> Shopping Cart
+                    </h1>
+                </div>
+            </div>
+            <div class="jumbotron">
+                <div class="row justify-content-center">
+                    <div>
+                        <h2>Selected movies</h2>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <table class="table table-hover">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Provider</th>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of cart;">
+                            <th scope="row">{{item.movieId}}</th>
+                            <td>
+                                <span *ngIf="item.providedBy == 2">
+                                    <fa-icon [icon]="['fas', 'video']"></fa-icon>
+                                    FILMWORLD
+                                </span>
+                                <span *ngIf="item.providedBy == 1">
+                                    <fa-icon [icon]="['fas', 'globe']"></fa-icon>
+                                    CINEMAWORLD
+                                </span>
+                            </td>
+                            <td>{{item.movieTitle}}</td>
+                            <td>{{item.price|currency:'USD'}}</td>
+                            <td>
+                                <a (click)="deleteItem(item.id)">
+                                    <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark border-right-0 border-left-0 border-bottom-0"></td>
+                            <td class="border border-dark border-right-0 border-left-0 border-bottom-0"></td>
+                            <td class="border border-dark border-right-0 border-left-0 border-bottom-0 text-right">Total:</td>
+                            <td class="border border-dark border-right-0 border-left-0 border-bottom-0">{{calcPrice|currency:'USD'}}</td>
+                            <td class="border border-dark border-right-0 border-left-0 border-bottom-0"><button class="btn btn-outline-dark btn-block" (click)="pay()">Purchase</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

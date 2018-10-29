@@ -1,0 +1,83 @@
+<div class="row justify-content-center">
+    <div class="col-md-10 col-sm-11">
+        <div *ngIf="movie" class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center text-white">{{movie.title}}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 h-100 p-4">
+                    <img class="w-100" src="{{movie.poster}}"/>
+                </div>
+                <div class="col-md-6 h-100 p-4 text-white">
+                    <div class="row">
+                        <div class="col-md-3 p-2">
+                            <h5>Plot</h5>
+                        </div>
+                        <div class="col p-2 font-weight-light">
+                            <p>
+                                {{movie.description}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 p-2">
+                            <h5>Country</h5>
+                        </div>
+                        <div class="col p-2">
+                            <p>
+                                {{movie.country}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 p-2">
+                            <h5>Stars</h5>
+                        </div>
+                        <div class="col p-2">
+                            <p>
+                                {{movie.actors}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 p-2">
+                            <h5>Release date</h5>
+                        </div>
+                        <div class="col p-2">
+                            <p>
+                                {{movie.released | date}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 p-2">
+                            <h5>Genres</h5>
+                        </div>
+                        <div class="col p-2">
+                            <h3>
+                                <span *ngFor="let genre of movie.genres; let gi = index" class="badge badge-pill badge-info m-1">{{genre}}</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <div *ngIf="!addedToCart" class="row">
+                        <div class="col-12 d-flex justify-content-end align-items-start">
+                            <button class="btn btn-outline-light" (click)="addToCart()">
+                                <span *ngIf="movie.providedBy == 2">
+                                    FILMWORLD
+                                    <fa-icon [icon]="['fas', 'video']"></fa-icon>
+                                </span>
+                                <span *ngIf="movie.providedBy == 1">
+                                    CINEMAWORLD
+                                    <fa-icon [icon]="['fas', 'globe']"></fa-icon>
+                                </span>
+                                <span class="font-weight-bold">{{movie.price | currency:'USD'}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
